@@ -1,6 +1,7 @@
 import React from 'react'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import instance from '../../config/axiosConfig';
 
 export default function SignUp() {
     const formik = useFormik({
@@ -19,8 +20,17 @@ export default function SignUp() {
             onSubmitProps.resetForm()
         }
     });
+    const payload = {
+        username: formik.values.username,
+        password: formik.values.password,
+        email: formik.values.email
+    }
     const handleSignUp = ()=>{
-        
+        instance.post('auth/register/',payload).then(response=>{
+            console.log(response)
+        }).catch(error=>{
+            console.log(error)
+        })
     }
     return (
         <form className="signinForm" onSubmit={formik.handleSubmit}>
