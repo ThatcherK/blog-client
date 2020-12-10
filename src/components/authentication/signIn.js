@@ -1,9 +1,12 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import instance from '../../config/axiosConfig';
+import { authContext } from '../../context/authContext';
+
 
 export default function SignIn() {
+    const {setToken}= useContext(authContext)
     const formik = useFormik({
         initialValues: {
             username: '',
@@ -24,7 +27,12 @@ export default function SignIn() {
     }
     const handleLogIn = () => {
         instance.post('auth/token/',payload).then(response=>{
-            console.log(response)
+            console.log(response.data)
+            setToken(response.data.refresh)
+            localStorage.setItem('token', response.data.access)
+        })
+        .catch((error)=>{
+            console.log(error)
         })
     }
     return (

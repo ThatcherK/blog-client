@@ -31,3 +31,14 @@ li a {
 h1{
   color: white;
 }
+.card{
+  display: flex;
+	flex-direction: column;
+	width: 300px;
+	height: fit-content;
+	margin: 15px;
+	border-radius: 2px;
+}
+.card ul{
+  list-style: none;
+}
